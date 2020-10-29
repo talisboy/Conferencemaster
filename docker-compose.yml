@@ -1,0 +1,152 @@
+version: '3.4'
+services:
+  api.xorroq:
+    build:
+      context: ./images/xorroq
+      args:
+        USER_ID: ${USER_ID}
+        GROUP_ID: ${GROUP_ID}
+    image: "xorroq"
+    volumes:
+      - ./api:/app
+      - ./gems:/gems
+      - ./id_rsa:/home/app/.ssh/id_rsa
+      - bundle:/usr/local/bundle
+      - 
+    working_dir: /app
+    user: ${USER_ID}:${GROUP_ID}
+    command: "bin/rails server -p 4000 -b '0.0.0.0'"
+    ports:
+      - '4000:4000'
+    depends_on:
+      - db
+      - redis
+    environment:
+      RAILS_ENV: development_docker
+      # ACTION_CABLE_FRONTEND_URL: ws://api:28080
+      # ACTION_CABLE_ALLOWED_REQUEST_ORIGINS: localhost:4300
+
+  facilitator.xorroq:
+    build:
+      context: ./images/xorroq
+      args:
+        USER_ID: ${USER_ID}
+        GROUP_ID: ${GROUP_ID}
+    image: "xorroq"
+    volumes:
+      - ./facilitator:/app
+      - ./gems:/gems
+      - ./id_rsa:/home/app/.ssh/id_rsa
+      - bundle:/usr/local/bundle
+    working_dir: /app
+    user: ${USER_ID}:${GROUP_ID}
+    command: "bin/rails server -p 4100 -b '0.0.0.0'"
+    ports:
+      - '4100:4100'
+    environment:
+      RAILS_ENV: development_docker
+    depends_on:
+      - api.xorroq
+
+  participant.xorroq:
+    build:
+      context: ./images/xorroq
+      args:
+        USER_ID: ${USER_ID}
+        GROUP_ID: ${GROUP_ID}
+    image: "xorroq"
+    volumes:
+      - ./participant:/app
+      - ./gems:/gems
+      - ./id_rsa:/home/app/.ssh/id_rsa
+      - bundle:/usr/local/bundle
+    working_dir: /app
+    user: ${USER_ID}:${GROUP_ID}
+    command: "bin/rails server -p 4200 -b '0.0.0.0'"
+    ports:
+      - "4200:4200"
+    environment:
+      RAILS_ENV: development_docker
+    depends_on:
+      - api.xorroq
+
+  website.xorroq:
+    build:
+      context: ./images/xorroq
+      args:
+        USER_ID: ${USER_ID}
+        GROUP_ID: ${GROUP_ID}
+    image: "xorroq"
+    volumes:
+      - ./website:/app
+      - ./gems:/gems
+      - ./id_rsa:/home/app/.ssh/id_rsa
+      - bundle:/usr/local/bundle
+    working_dir: /app
+    user: ${USER_ID}:${GROUP_ID}
+    command: "bin/rails server -p 3100 -b '0.0.0.0'"
+    ports:
+      - "3100:3100"
+    environment:
+      RAILS_ENV: development_docker
+    depends_on:
+      - db
+
+  account.xorroq:
+    build:
+      context: ./account
+    image: "xorroq_account"
+    working_dir: /app
+    command: "bundle exec rubycas-server -c config/development_docker.yml"
+    ports:
+      - "3300:3300"
+    depends_on:
+      - db
+
+  # web_components:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.web_components
+  #   image: "angular"
+  #   working_dir: /app
+  #   user: $UID:$GID
+  #   ports:
+  #     - "4300:4300"
+  #   command: "ng serve"
+  #   volumes:
+  #     - ./web_components:/app
+  #   depends_on:
+  #     - api
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_USER: devUser
+      MYSQL_PASSWORD: devAdmin
+      MYSQL_ROOT_PASSWORD: devRoot
+    ports:
+      - "3400:3306"
+    # Remove sql_mode=only_full_group_by
+    command: mysqld --sql_mode="ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+    volumes:
+      - db:/var/lib/mysql
+
+  phpMyAdmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - '3500:80'
+
+  redis:
+    image: redis:4.0.6
+    ports:
+      - "3600:6379"
+
+volumes:
+  db:
+  bundle:
