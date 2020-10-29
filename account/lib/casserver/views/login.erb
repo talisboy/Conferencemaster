@@ -1,0 +1,26 @@
+<% host = (URI.parse(request.referer).host rescue false) %>
+<div class="container">
+  <% if @message %>
+    <div class="more_info_container <%= escape_html @message[:type] %>_container">
+        <%= escape_html @message[:message] %>
+    </div>
+  <% end %>
+
+  <div>
+    <img id="logo" src="<%= escape_html @uri_path %>/themes/<%= @theme %>/logo.png" />
+  </div>
+
+  <div class="login_container">
+    <% if host ==  'qf.xorro.com' || host == 'qf.staging.xorro.com' %>
+      <h3>Facilitator Login</h3>
+    <% end %>
+    <%= erb(:_login_form, :layout => false) %>
+  </div>
+  <% if host ==  'qf.xorro.com' || host == 'qf.staging.xorro.com' %>
+    <div class="more_info_container">
+      <p>Not expecting this page?</p>
+      <p>If you're trying to join a Xorro-Q session then head over to <a href="http://q.xorro.com">q.xorro.com</a></p>
+    </div>
+  <% end %>
+</div>
+<div class="terms"><a href="https://www.xorro.com/terms">Terms of Use</a></div>

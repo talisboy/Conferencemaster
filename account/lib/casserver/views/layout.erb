@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= escape_html @organization %> <%= t.label.central_login_title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" type="text/css" href="<%= escape_html @uri_path %>/themes/cas.css?v2" />
+    <link rel="stylesheet" type="text/css" href="<%= escape_html @uri_path %>/themes/<%= escape_html @theme %>/theme.css?v2" />
+    <link rel="icon" type="image/png" href="<%= escape_html @uri_path %>/themes/<%= escape_html @theme %>/favicon.png" />
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
+  </head>
+
+  <body onload="if (document.getElementById('username')) document.getElementById('username').focus()">
+  <header>
+    <img src="themes/xorro/login_topimg.png" style="max-width: 100%;">
+  </header>
+  <%= yield %>
+  </body>
+</html>

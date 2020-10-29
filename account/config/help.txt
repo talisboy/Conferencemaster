@@ -1,0 +1,2 @@
+copy <RAILS_ENV>.yml file to /etc/rubycas-server/config.yml
+create rubycas-server folder if not exist with read access

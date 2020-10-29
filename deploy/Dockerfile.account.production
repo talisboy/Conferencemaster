@@ -1,0 +1,61 @@
+# FROM ruby:2.1.2
+
+# # Install packages
+# RUN apt-get update -qq && \
+#     apt-get install -y build-essential libpq-dev apache2 dirmngr gnupg && \
+#     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7 && \
+#     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 9D6D8F6BC857C906 && \
+#     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 7638D0442B90D010 && \
+#     apt-get update -qq && \
+#     apt-get upgrade -qq && \
+#     apt-get install -y apt-transport-https ca-certificates && \
+#     sh -c 'echo deb https://oss-binaries.phusionpassenger.com/apt/passenger jessie main > /etc/apt/sources.list.d/passenger.list' && \
+#     apt-get update -qq && \
+#     apt-get install -y libapache2-mod-passenger && \
+#     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# RUN a2enmod passenger
+
+# RUN rm /etc/apache2/sites-enabled/000-default.conf
+
+# # Install gems
+# ENV APP_HOME /var/www/app
+# ENV HOME /root
+# RUN mkdir $APP_HOME
+# WORKDIR $APP_HOME
+
+# # Upload source
+# COPY ./account $APP_HOME
+# RUN bundle install
+
+# # Copy config
+# COPY ./deploy/apache.conf /etc/apache2/sites-enabled/apache.conf
+# COPY ./deploy/config.yml /etc/rubycas-server/config.yml
+# # Give log access to passenger
+# RUN touch /var/log/casserver.log && chmod 777 /var/log/casserver.log
+
+# # Start server
+# EXPOSE 80
+# CMD ["apachectl", "-D", "FOREGROUND"]
+
+
+FROM phusion/passenger-ruby21
+ENV HOME /root
+CMD ["/sbin/my_init"]
+
+# setup app
+RUN rm /etc/nginx/sites-enabled/default
+COPY deploy/webapp.conf /etc/nginx/sites-enabled/webapp.conf
+RUN mkdir /home/app/webapp
+COPY --chown=app:app account /home/app/webapp
+RUN cd /home/app/webapp && bundle install
+COPY --chown=app:app deploy/config.yml /etc/rubycas-server/config.yml
+RUN touch /var/log/casserver.log && chmod 777 /var/log/casserver.log
+
+# clean
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# start nginx
+RUN rm -f /etc/service/nginx/down

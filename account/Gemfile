@@ -1,0 +1,10 @@
+source "https://rubygems.org"
+gemspec
+
+gem 'mysql2', '0.3.20'
+gem 'activerecord-mysql2-adapter'
+gem 'bcrypt'
+
+group :production do
+  gem 'pg'
+end

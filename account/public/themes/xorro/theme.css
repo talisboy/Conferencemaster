@@ -1,0 +1,239 @@
+*,
+*:after,
+*:before {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    background: #ddd url(xorroq_bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: #6c6c6c;
+    font-family: "Source Sans Pro", sans-serif;
+}
+
+header {
+    padding: .4em .4em .8em .4em;
+    margin-bottom: 1.4em;
+    max-width: 100%;
+    background: rgba(255, 255, 255, 0.75);
+    /* IE9 */
+    background: -ms-linear-gradient(top, rgba(255, 255, 255, 0.75) 0%, rgba(244, 244, 244, 0.75) 100%);
+    /* IE10+ */
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.75) 0%, rgba(244, 244, 244, 0.75) 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.75) 0%, rgba(244, 244, 244, 0.75) 100%);
+    /* FF3.6+ */
+    background: linear-gradient(top, rgba(255, 255, 255, 0.75) 0%, rgba(244, 244, 244, 0.75) 100%);
+    /* W3C */
+}
+
+.container {
+    max-width: 50em;
+    margin: .5em auto;
+}
+
+.box {
+    background-color: rgba(255, 255, 255, .8);
+    border-radius: .4em;
+    padding: .4em;
+}
+
+.login_container {
+    border: 1px #d1d1d1 solid;
+    box-shadow: .2em .2em .1em rgba(0, 0, 0, .2);
+    background-color: #fff;
+    border-radius: .4em;
+    overflow: hidden;
+    margin: 1.4em 10% 1em 10%;
+    padding: .4em;
+}
+
+.login_box {
+    padding: .4em;
+}
+
+.pw_reset {
+    line-height: 28px;
+    font-size: 80%;
+    padding: 5px;
+}
+
+.pw_reset a {
+    color: #888;
+}
+
+.pw_reset a:hover {
+    color: #EA6640;
+}
+
+.terms {
+    /*background: pink;*/
+    line-height: 28px;
+    font-size: 80%;
+    padding: 5px;
+}
+
+.terms a {
+    text-shadow: rgba(40, 40, 40, .85) 0px 0px 1px;
+    color: #fff;
+}
+
+.terms a:hover {
+    color: #EA6640;
+}
+
+.more_info_container {
+    background-color: rgba(40, 40, 40, .5);
+    color: #fff;
+    border-radius: .4em;
+    overflow: hidden;
+    margin: 1em 10% 1em 10%;
+    padding: .6em .4em;
+}
+
+a {
+    color: #4DBFE1;
+}
+
+a:hover {
+    color: #6c6c6c;
+}
+
+.pad {
+    padding: .4em;
+}
+
+.field {
+    padding: .4em;
+}
+
+.field label {
+    display: block;
+    margin-bottom: .5em;
+    width: 100%;
+}
+
+.field input:not([class^="button"]) {
+    border: 1px solid #d1d1d1;
+    padding: 0.3em;
+    border-radius: 5px;
+    width: 100%;
+}
+
+h3 {
+    color: #EA6640;
+}
+
+.mistake_container {
+    background-color: rgba(200, 0, 0, .8);
+    font-size: 80%;
+}
+
+.mistake_confirmation {
+    background-color: rgba(0, 200, 0, .8);
+    font-size: 80%;
+}
+
+.mistake_notice {
+    background-color: rgba(100, 100, 200, .8);
+    font-size: 80%;
+}
+
+
+/* CAS overrides */
+
+#username,
+#password {
+    width: 100%;
+}
+
+#login-form {
+    text-align: left;
+}
+
+label {
+    font-weight: 400;
+    font-size: 100%;
+}
+
+
+/* End CAS overrides */
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+#headline-container {
+    display: none;
+    margin-bottom: 5px;
+}
+
+#login-box {
+    margin: 0 auto;
+    width: 430px;
+    top: 185px;
+    position: relative;
+}
+
+#login-form {
+    border: none;
+    padding: 0;
+}
+
+#logo-container {
+    vertical-align: middle;
+}
+
+#logo {
+    display: none;
+    width: 1px;
+    height: 1px;
+}
+
+#headline-container {
+    border-bottom: none;
+    font-size: 18px;
+    font-family: Verdana, sans-serif;
+}
+
+#submit-container {
+    padding: 10px 0;
+}
+
+#login-submit {
+    height: 28px;
+    line-height: 18px;
+    min-width: 50px;
+    padding: 5px 14px 8px 14px;
+    color: #fff;
+    font-size: 95%;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    background-color: #4DBFE1;
+    -moz-box-sizing: content-box;
+}
+
+#login-submit:hover {
+    background-color: #2EA4CC;
+    color: #fff;
+}
+
+#form-layout td#submit-container {
+    padding-right: 0;
+}

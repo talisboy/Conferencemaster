@@ -1,0 +1,24 @@
+<form method="post" action="<%= @form_action || "login" %>" id="login-form"
+      onsubmit="submitbutton = document.getElementById('login-submit'); submitbutton.value='<%= t.notice.please_wait %>'; submitbutton.disabled=true; return true;">
+  <div class="login_box">
+    <div class="field">
+      <label id="username-label" for="username"><%= t.label.username %></label>
+      <input type="text" id="username" name="username" tabindex="1" accesskey="u"/>
+    </div>
+    <div class="field">
+      <label id="password-label" for="password"><%= t.label.password %></label>
+      <input type="password" id="password" name="password" tabindex="2" accesskey="p" autocomplete="off"/>
+    </div>
+    <div class="field" style="float:right;">
+
+      <input type="hidden" id="lt" name="lt" value="<%= escape_html @lt %>"/>
+      <input type="hidden" id="service" name="service" value="<%= escape_html @service %>"/>
+      <input type="submit" class="button" accesskey="l" value="<%= t.button.login %>"
+             tabindex="4" id="login-submit"/>
+    </div>
+    <div class="pw_reset">
+      <a href="https://www.xorro.com/users/request_password_reset">Forgot your password?</a>
+    </div>
+    <%#= @infoline %>
+  </div>
+</form>
